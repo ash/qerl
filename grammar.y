@@ -65,11 +65,15 @@ hash_declaration:
 
 expression:
     '(' expression ')'
-|   variable_name
-|   indexed_array
-|   indexed_hash
+|   variable_value
 |   expression '+' expression {printf("line %d: addition\n", yylineno); /*printf("line %d: added %s and %s\n", yylineno, $1, $3);*/}
 |   expression WS expression {printf("line %d: string concatenation\n", yylineno);}
+;
+
+variable_value:
+    variable_name
+|   indexed_array
+|   indexed_hash
 ;
 
 variable_name:
