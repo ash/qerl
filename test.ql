@@ -46,3 +46,7 @@ hash{name2}; # variable name as hash index
 
 name + array[0];
 name + array[0] + hash{name5};
+
+# my .global; # cannot define global variables
+.env{name};
+.args[1];

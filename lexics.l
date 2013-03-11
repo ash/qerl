@@ -8,6 +8,7 @@
 %option  nodefault yylineno
 
 skipws [ \t\n]*
+identifier [a-zA-Z_][a-zA-Z_0-9-]+
 
 %%
 
@@ -29,7 +30,8 @@ skipws [ \t\n]*
 
 "my"                        {return VARIABLE_DECLARATOR;}
 
-[a-zA-Z_][a-zA-Z_0-9-]+     {yylval.s = strndup(yytext, yyleng); return NAME;}
+{identifier}                {yylval.s = strndup(yytext, yyleng); return IDENTIFIER;}
+"."{identifier}             {yylval.s = strndup(yytext, yyleng); return GLOBAL_IDENTIFIER;}
 
 [+-]?[0-9]+                 {yylval.i = atoi(strndup(yytext, yyleng)); return INTEGER;}
 
