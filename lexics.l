@@ -29,6 +29,7 @@ identifier [a-zA-Z_][a-zA-Z_0-9-]+
 
 {skipws}"+"{skipws}         {return '+';}
 
+{skipws}","{skipws}         {return ',';}
 {skipws}";"{skipws}         {return ';';}
 {skipws}"="{skipws}         {return '=';}
 

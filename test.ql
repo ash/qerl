@@ -61,3 +61,8 @@ name2 name3;
 name3 .env<HOME> .args[0];
 
 name + name2 name3 + name5;
+
+say(name);
+say(first_name last_name);
+say(first_name, last_name);
+say(days(), months(), years(1990));

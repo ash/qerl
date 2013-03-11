@@ -62,18 +62,23 @@ hash_declaration:
     VARIABLE_DECLARATOR WS IDENTIFIER '{' '}' {printf("line %d: hash declared '%s'\n", yylineno, $3);}
 ;
 
-
 expression:
     '(' expression ')'
-|   variable_value
-|   expression '+' expression {printf("line %d: addition\n", yylineno); /*printf("line %d: added %s and %s\n", yylineno, $1, $3);*/}
+|   value
+|   function_call
+|   expression '+' expression {printf("line %d: addition\n", yylineno);}
 |   expression WS expression {printf("line %d: string concatenation\n", yylineno);}
 ;
 
-variable_value:
-    variable_name
+value:
+    number
+|   variable_name
 |   indexed_array
 |   indexed_hash
+;
+
+number:
+    INTEGER
 ;
 
 variable_name:
@@ -88,6 +93,16 @@ indexed_array:
 indexed_hash:
     variable_name '{' IDENTIFIER '}' {printf("line %d: hash %s{}, indexed by variable '%s'\n", yylineno, $1, $3);}
 |   variable_name '<' IDENTIFIER '>' {printf("line %d: hash %s{}, indexed by string '%s'\n", yylineno, $1, $3);}
+;
+
+function_call:
+    IDENTIFIER '(' argument_list ')' {printf("line %d: function %s() call\n", yylineno, $1);}
+;
+
+argument_list:
+    /* empty */
+|   expression
+|   expression ',' argument_list
 ;
 
 %%
