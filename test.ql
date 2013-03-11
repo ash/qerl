@@ -45,10 +45,19 @@ array[-7];
 hash{name2};  # variable name as hash index
 hash<string>; # using strings (with no spaces etc.) as a hash key
 
-
 name + array[0];
 name + array[0] + hash{name5};
 
-# my .global; # cannot define global variables
+# my .global; # you can't define global variables
 .env{name};
 .args[1];
+
+.evn<HOME> + .args[3];
+
+(name2 + name3);
+name + (name2 + .args[0] + (hash<string> + name6));
+
+name2 name3;
+name3 .env<HOME> .args[0];
+
+name + name2 name3 + name5;

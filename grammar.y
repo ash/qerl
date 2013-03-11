@@ -64,10 +64,12 @@ hash_declaration:
 
 
 expression:
-    variable_name
-|   expression '+' expression {printf("line %d: addition\n", yylineno); /*printf("line %d: added %s and %s\n", yylineno, $1, $3);*/}
+    '(' expression ')'
+|   variable_name
 |   indexed_array
 |   indexed_hash
+|   expression '+' expression {printf("line %d: addition\n", yylineno); /*printf("line %d: added %s and %s\n", yylineno, $1, $3);*/}
+|   expression WS expression {printf("line %d: string concatenation\n", yylineno);}
 ;
 
 variable_name:
@@ -76,12 +78,12 @@ variable_name:
 ;
 
 indexed_array:
-    variable_name '[' INTEGER ']' {printf("line %d: array %s, index %i\n", yylineno, $1, $3);}
+    variable_name '[' INTEGER ']' {printf("line %d: array %s[], index %i\n", yylineno, $1, $3);}
 ;
 
 indexed_hash:
-    variable_name '{' IDENTIFIER '}' {printf("line %d: hash %s, indexed by variable '%s'\n", yylineno, $1, $3);}
-|   variable_name '<' IDENTIFIER '>' {printf("line %d: hash %s, indexed by string '%s'\n", yylineno, $1, $3);}
+    variable_name '{' IDENTIFIER '}' {printf("line %d: hash %s{}, indexed by variable '%s'\n", yylineno, $1, $3);}
+|   variable_name '<' IDENTIFIER '>' {printf("line %d: hash %s{}, indexed by string '%s'\n", yylineno, $1, $3);}
 ;
 
 %%
