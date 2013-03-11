@@ -5,6 +5,7 @@
 
 %token VARIABLE_DECLARATOR
 %token <s> NAME
+%token <i> INTEGER
 %token VALUE
 %token WS
 
@@ -12,6 +13,7 @@
 
 %union {
     char* s;
+    int i;
 }
 
 %%
@@ -38,7 +40,6 @@ statement:
 |   expression
 ;
 
-
 declaration:
     scalar_declaration
 |   array_declaration
@@ -60,7 +61,18 @@ hash_declaration:
 
 
 expression:
-    NAME '+' NAME {printf("line %d: added %s and %s\n", yylineno, $1, $3);}
+    NAME
+|   expression '+' expression {printf("line %d: addition\n", yylineno); /*printf("line %d: added %s and %s\n", yylineno, $1, $3);*/}
+|   indexed_array
+|   indexed_hash
+;
+
+indexed_array:
+    NAME '[' INTEGER ']' {printf("line %d: array %s, index %i\n", yylineno, $1, $3);}
+;
+
+indexed_hash:
+    NAME '{' NAME '}' {printf("line %d: hash %s, index '%s'\n", yylineno, $1, $3);}
 ;
 
 %%

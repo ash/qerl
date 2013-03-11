@@ -38,3 +38,11 @@ name + name2;
 
 my array[];
 my hash{};
+
+array[8];
+array[-7];
+
+hash{name2}; # variable name as hash index
+
+name + array[0];
+name + array[0] + hash{name5};

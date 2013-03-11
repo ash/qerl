@@ -31,6 +31,7 @@ skipws [ \t\n]*
 
 [a-zA-Z_][a-zA-Z_0-9-]+     {yylval.s = strndup(yytext, yyleng); return NAME;}
 
+[+-]?[0-9]+                 {yylval.i = atoi(strndup(yytext, yyleng)); return INTEGER;}
 
 
 .   {printf("bad input character '%s' at line %d\n", yytext, yylineno);}
