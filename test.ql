@@ -42,7 +42,9 @@ my hash{};
 array[8];
 array[-7];
 
-hash{name2}; # variable name as hash index
+hash{name2};  # variable name as hash index
+hash<string>; # using strings (with no spaces etc.) as a hash key
+
 
 name + array[0];
 name + array[0] + hash{name5};

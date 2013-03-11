@@ -80,7 +80,8 @@ indexed_array:
 ;
 
 indexed_hash:
-    variable_name '{' IDENTIFIER '}' {printf("line %d: hash %s, index '%s'\n", yylineno, $1, $3);}
+    variable_name '{' IDENTIFIER '}' {printf("line %d: hash %s, indexed by variable '%s'\n", yylineno, $1, $3);}
+|   variable_name '<' IDENTIFIER '>' {printf("line %d: hash %s, indexed by string '%s'\n", yylineno, $1, $3);}
 ;
 
 %%
