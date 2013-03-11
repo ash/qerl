@@ -35,3 +35,6 @@ name + name2;
 {}; # also in this form
 {;} # and more
 {;};
+
+my array[];
+my hash{};
