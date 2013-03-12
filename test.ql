@@ -43,7 +43,7 @@ array[8];
 array[-7];
 
 hash{name2};  # variable name as hash index
-hash<string>; # using strings (with no spaces etc.) as a hash key
+#hash<string>; # using strings (with no spaces etc.) as a hash key
 
 name + array[0];
 name + array[0] + hash{name5};
@@ -52,13 +52,13 @@ name + array[0] + hash{name5};
 .env{name};
 .args[1];
 
-.evn<HOME> + .args[3];
+#.evn{"HOME"} + .args[3];
 
 (name2 + name3);
-name + (name2 + .args[0] + (hash<string> + name6));
+name + (name2 + .args[0] + (hash{key} + name6));
 
 name2 name3;
-name3 .env<HOME> .args[0];
+#name3 .env<HOME> .args[0];
 
 name + name2 name3 + name5;
 
@@ -79,7 +79,7 @@ var1 + (var2 * var3);
 -var;
 var1 + (-var2);
 
-#value1 < value2;
+value1 < value2;
 value1 > value2;
 value1 <= value2;
 value1 >= value2;
