@@ -1,5 +1,5 @@
 qerl: qerl.c grammar.y lexics.l
-	bison -d grammar.y
+	bison -d grammar.y -v
 	flex -o lexics.lex.c lexics.l
 	
 	cc -c -o grammar.tab.o grammar.tab.c

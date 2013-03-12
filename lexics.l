@@ -37,6 +37,7 @@ identifier [a-zA-Z_][a-zA-Z_0-9-]*
 #{skipws}"\""{skipws}        {return '"';}
 {skipws}"="{skipws}         {return '=';}
 {skipws}"!"{skipws}         {return '!';}
+{skipws}"_"{skipws}         {return '_';}
 
 {skipws}"<="{skipws}        {return LESS_EQUAL;}
 {skipws}">="{skipws}        {return MORE_EQUAL;}
@@ -51,6 +52,8 @@ identifier [a-zA-Z_][a-zA-Z_0-9-]*
 
 "my"                        {return VARIABLE_DECLARATOR;}
 "sub"                       {return SUBROUTINE_DECLARATOR;}
+
+"if"                        {return IF;}
 
 {identifier}                {yylval.s = strndup(yytext, yyleng); return IDENTIFIER;}
 "."{identifier}             {yylval.s = strndup(yytext, yyleng); return GLOBAL_IDENTIFIER;}

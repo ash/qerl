@@ -4,6 +4,6 @@
 #include "qerl.h"
 #include "grammar.tab.h"
 
-int main() {
+int main() {    
     return yyparse();
 }

@@ -1,6 +1,8 @@
 %{
+#define YYDEBUG 1
+
 #include <stdio.h>
-#include "qerl.h"    
+#include "qerl.h"
 %}
 
 %union {
@@ -9,6 +11,7 @@
 }
 
 %token VARIABLE_DECLARATOR SUBROUTINE_DECLARATOR
+%token IF
 %token <s> IDENTIFIER
 %token <s> GLOBAL_IDENTIFIER
 %token <i> INTEGER
@@ -21,6 +24,7 @@
 %nonassoc APPROXIMATE_EQUAL PLUS_MINUS
 %left '+' '-'
 %left '*' '/'
+%left '_'
 %nonassoc UNARY_MINUS UNARY_NOT
 
 %start programme
@@ -41,11 +45,16 @@ statementlist:
 codeblock:
     '{' statementlist '}'
 |   statement
+|   branch
 ;
 
 statement:
     /* empty */ /* {printf("line %d: empty statement\n", yylineno);} */
-|   declaration
+|   non_empty_statement
+;
+
+non_empty_statement:
+    declaration
 |   expression
 ;
 
@@ -127,7 +136,7 @@ comparison:
 ;
 
 string_concatenation:
-|   expression WHITE_SPACE expression {printf("line %d: string concatenation\n", yylineno);}
+|   expression '_' expression {printf("line %d: string concatenation\n", yylineno);}
 ;
 
 function_call:
@@ -140,7 +149,17 @@ argument_list:
 |   expression ',' argument_list
 ;
 
+branch:
+    if_branch
+;
+
+if_branch:
+    IF WHITE_SPACE expression non_empty_statement {printf("line %d: if1\n", yylineno);}
+;
+
+
 %%
+yydebug = 1;
 
 void yyerror(char *s, ...) {
     printf("Error at line %d\n", yylineno);
