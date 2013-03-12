@@ -12,6 +12,10 @@
 
 %type <s> variable_name
 
+%left '+' '-'
+%left '*' '/'
+%nonassoc UNARY_MINUS
+
 %start programme
 
 %union {
@@ -66,7 +70,7 @@ expression:
     '(' expression ')'
 |   value
 |   function_call
-|   expression '+' expression {printf("line %d: addition\n", yylineno);}
+|   arithmetic_expression
 |   expression WS expression {printf("line %d: string concatenation\n", yylineno);}
 ;
 
@@ -93,6 +97,14 @@ indexed_array:
 indexed_hash:
     variable_name '{' IDENTIFIER '}' {printf("line %d: hash %s{}, indexed by variable '%s'\n", yylineno, $1, $3);}
 |   variable_name '<' IDENTIFIER '>' {printf("line %d: hash %s{}, indexed by string '%s'\n", yylineno, $1, $3);}
+;
+
+arithmetic_expression:
+   expression '+' expression {printf("line %d: addition\n", yylineno);}
+|  expression '-' expression {printf("line %d: subtraction\n", yylineno);}
+|  expression '*' expression {printf("line %d: multiplication\n", yylineno);}
+|  expression '/' expression {printf("line %d: division\n", yylineno);}
+|  '-' expression %prec UNARY_MINUS {printf("line %d: unary minus\n", yylineno);}
 ;
 
 function_call:

@@ -66,3 +66,15 @@ say(name);
 say(first_name last_name);
 say(first_name, last_name);
 say(days(), months(), years(1990));
+
+var1 + var2;
+var1 - var2;
+var1 * var2;
+var1 / var2;
+
+var1 + var2 * var3;
+(var1 + var2) * var3;
+var1 + (var2 * var3);
+
+-var;
+var1 + (-var2);
