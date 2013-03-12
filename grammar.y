@@ -18,6 +18,7 @@
 %type <s> variable_name
 
 %nonassoc '<' '>' LESS_EQUAL MORE_EQUAL EQUAL NOT_EQUAL
+%nonassoc APPROXIMATE_EQUAL PLUS_MINUS
 %left '+' '-'
 %left '*' '/'
 %nonassoc UNARY_MINUS
@@ -116,6 +117,7 @@ comparison:
 |   expression MORE_EQUAL expression {printf("line %d: more than or equal\n", yylineno);}
 |   expression EQUAL expression {printf("line %d: equal\n", yylineno);}
 |   expression NOT_EQUAL expression {printf("line %d: not equal\n", yylineno);}
+|   expression APPROXIMATE_EQUAL expression PLUS_MINUS expression {printf("line %d: approximate equall\n", yylineno);}
 ;
 
 string_concatenation:

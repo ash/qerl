@@ -8,7 +8,7 @@
 %option  nodefault yylineno
 
 skipws [ \t\n]*
-identifier [a-zA-Z_][a-zA-Z_0-9-]+
+identifier [a-zA-Z_][a-zA-Z_0-9-]*
 
 %%
 
@@ -41,6 +41,10 @@ identifier [a-zA-Z_][a-zA-Z_0-9-]+
 {skipws}">="{skipws}        {return MORE_EQUAL;}
 {skipws}"=="{skipws}        {return EQUAL;}
 {skipws}"!="{skipws}        {return NOT_EQUAL;}
+
+{skipws}"≈"{skipws}         {return APPROXIMATE_EQUAL;} /* Alt+x on a Mac keyboad */
+{skipws}"±"{skipws}         {return PLUS_MINUS;} /* Alt+Shift+Plus on a Mac keyboad */
+
 
 [ \t\n]+                    {return WHITE_SPACE;}
 
