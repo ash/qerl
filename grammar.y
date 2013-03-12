@@ -3,25 +3,26 @@
 #include "qerl.h"    
 %}
 
+%union {
+    char* s;
+    int i;
+}
+
 %token VARIABLE_DECLARATOR
 %token <s> IDENTIFIER
 %token <s> GLOBAL_IDENTIFIER
 %token <i> INTEGER
 %token VALUE
-%token WS
+%token WHITE_SPACE
 
 %type <s> variable_name
 
+%nonassoc '<' '>' LESS_EQUAL MORE_EQUAL EQUAL NOT_EQUAL
 %left '+' '-'
 %left '*' '/'
 %nonassoc UNARY_MINUS
 
 %start programme
-
-%union {
-    char* s;
-    int i;
-}
 
 %%
 
@@ -54,24 +55,25 @@ declaration:
 ;
 
 scalar_declaration:
-    VARIABLE_DECLARATOR WS IDENTIFIER {printf("line %d: declared '%s'\n", yylineno, $3); /*declare_variable_IDENTIFIER(yylval.s);*/}
-|   VARIABLE_DECLARATOR WS IDENTIFIER '=' IDENTIFIER {printf("line %d: scalar declared '%s' and assigned to '%s'\n", yylineno, $3, $5);}
+    VARIABLE_DECLARATOR WHITE_SPACE IDENTIFIER {printf("line %d: declared '%s'\n", yylineno, $3); /*declare_variable_IDENTIFIER(yylval.s);*/}
+|   VARIABLE_DECLARATOR WHITE_SPACE IDENTIFIER '=' IDENTIFIER {printf("line %d: scalar declared '%s' and assigned to '%s'\n", yylineno, $3, $5);}
 ;
 
 array_declaration:
-    VARIABLE_DECLARATOR WS IDENTIFIER '[' ']' {printf("line %d: array declared '%s'\n", yylineno, $3);}
+    VARIABLE_DECLARATOR WHITE_SPACE IDENTIFIER '[' ']' {printf("line %d: array declared '%s'\n", yylineno, $3);}
 ;
 
 hash_declaration:
-    VARIABLE_DECLARATOR WS IDENTIFIER '{' '}' {printf("line %d: hash declared '%s'\n", yylineno, $3);}
+    VARIABLE_DECLARATOR WHITE_SPACE IDENTIFIER '{' '}' {printf("line %d: hash declared '%s'\n", yylineno, $3);}
 ;
 
 expression:
     '(' expression ')'
 |   value
-|   function_call
 |   arithmetic_expression
-|   expression WS expression {printf("line %d: string concatenation\n", yylineno);}
+|   comparison
+|   string_concatenation
+|   function_call
 ;
 
 value:
@@ -105,6 +107,19 @@ arithmetic_expression:
 |  expression '*' expression {printf("line %d: multiplication\n", yylineno);}
 |  expression '/' expression {printf("line %d: division\n", yylineno);}
 |  '-' expression %prec UNARY_MINUS {printf("line %d: unary minus\n", yylineno);}
+;
+
+comparison:
+    expression '<' expression {printf("line %d: less than\n", yylineno);}
+|   expression '>' expression {printf("line %d: more than\n", yylineno);}
+|   expression LESS_EQUAL expression {printf("line %d: less than or equal\n", yylineno);}
+|   expression MORE_EQUAL expression {printf("line %d: more than or equal\n", yylineno);}
+|   expression EQUAL expression {printf("line %d: equal\n", yylineno);}
+|   expression NOT_EQUAL expression {printf("line %d: not equal\n", yylineno);}
+;
+
+string_concatenation:
+|   expression WHITE_SPACE expression {printf("line %d: string concatenation\n", yylineno);}
 ;
 
 function_call:

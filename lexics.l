@@ -34,9 +34,15 @@ identifier [a-zA-Z_][a-zA-Z_0-9-]+
 
 {skipws}","{skipws}         {return ',';}
 {skipws}";"{skipws}         {return ';';}
+#{skipws}"\""{skipws}        {return '"';}
 {skipws}"="{skipws}         {return '=';}
 
-[ \t\n]+                    {return WS;}
+{skipws}"<="{skipws}        {return LESS_EQUAL;}
+{skipws}">="{skipws}        {return MORE_EQUAL;}
+{skipws}"=="{skipws}        {return EQUAL;}
+{skipws}"!="{skipws}        {return NOT_EQUAL;}
+
+[ \t\n]+                    {return WHITE_SPACE;}
 
 "my"                        {return VARIABLE_DECLARATOR;}
 

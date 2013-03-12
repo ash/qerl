@@ -78,3 +78,10 @@ var1 + (var2 * var3);
 
 -var;
 var1 + (-var2);
+
+#value1 < value2;
+value1 > value2;
+value1 <= value2;
+value1 >= value2;
+value1 == value2;
+value1 != value2;
