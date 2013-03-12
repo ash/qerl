@@ -8,7 +8,7 @@
     int i;
 }
 
-%token VARIABLE_DECLARATOR
+%token VARIABLE_DECLARATOR SUBROUTINE_DECLARATOR
 %token <s> IDENTIFIER
 %token <s> GLOBAL_IDENTIFIER
 %token <i> INTEGER
@@ -53,6 +53,7 @@ declaration:
     scalar_declaration
 |   array_declaration
 |   hash_declaration
+|   subroutine_definition
 ;
 
 scalar_declaration:
@@ -66,6 +67,10 @@ array_declaration:
 
 hash_declaration:
     VARIABLE_DECLARATOR WHITE_SPACE IDENTIFIER '{' '}' {printf("line %d: hash declared '%s'\n", yylineno, $3);}
+;
+
+subroutine_definition:
+    SUBROUTINE_DECLARATOR WHITE_SPACE IDENTIFIER '(' argument_list ')' codeblock {printf("line %d: function '%s' defined\n", yylineno, $3);}
 ;
 
 expression:

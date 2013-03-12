@@ -90,3 +90,15 @@ a ≈ b ± delta;
 
 !a;
 !(a >= b);
+
+sub my_func() {
+    my local_var;    
+}
+
+sub with_args(a, b) {
+    a + b
+}
+
+sub oneliner() say(x);
+
+sub diff(a, b) a - b;

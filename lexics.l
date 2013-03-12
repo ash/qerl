@@ -50,6 +50,7 @@ identifier [a-zA-Z_][a-zA-Z_0-9-]*
 [ \t\n]+                    {return WHITE_SPACE;}
 
 "my"                        {return VARIABLE_DECLARATOR;}
+"sub"                       {return SUBROUTINE_DECLARATOR;}
 
 {identifier}                {yylval.s = strndup(yytext, yyleng); return IDENTIFIER;}
 "."{identifier}             {yylval.s = strndup(yytext, yyleng); return GLOBAL_IDENTIFIER;}
