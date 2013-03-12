@@ -87,3 +87,6 @@ value1 == value2;
 value1 != value2;
 
 a ≈ b ± delta;
+
+!a;
+!(a >= b);

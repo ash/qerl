@@ -21,7 +21,7 @@
 %nonassoc APPROXIMATE_EQUAL PLUS_MINUS
 %left '+' '-'
 %left '*' '/'
-%nonassoc UNARY_MINUS
+%nonassoc UNARY_MINUS UNARY_NOT
 
 %start programme
 
@@ -118,6 +118,7 @@ comparison:
 |   expression EQUAL expression {printf("line %d: equal\n", yylineno);}
 |   expression NOT_EQUAL expression {printf("line %d: not equal\n", yylineno);}
 |   expression APPROXIMATE_EQUAL expression PLUS_MINUS expression {printf("line %d: approximate equall\n", yylineno);}
+|   '!' expression %prec UNARY_NOT {printf("line %d: unary negation\n", yylineno);}
 ;
 
 string_concatenation:
